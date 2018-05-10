@@ -8,49 +8,153 @@
 
     <title>全民预言家</title>
     <link rel="stylesheet" href="lib/bootstrap-4.0.0-dist/css/bootstrap.min.css">
+    <link rel="shortcut icon" type="image/x-icon" href="images/icon_logo.png" media="screen" /> 
+    <style>
 
+    li{
+        float: left; 
+        margin-left: 30px;
+    }
+    .rounded-bottom-0{
+        border-bottom-right-radius:0em;
+        border-bottom-left-radius:0em;
+    }
+    .w-40{
+        width: 40%
+    }
+    .span_font{
+        width: 152px;
+        height: 40px;
+        font-family: PingFangSC-Regular;
+        font-size: 28px;
+        font-weight: normal;
+        font-stretch: normal;
+        line-height: 0px;
+        letter-spacing: 2px;
+        color: #383838;
+    }
+    .ml-5{
+        margin-left: 3%;
+    }
+    .sortfont{
+        background-color: white;    
+        color: #7f7f7f;
+    }
+    small{
+        margin-right: 20px;
+    }
+
+    </style>
 </head>
 
-<body>
-    <div class="container">
-    <div class="row">
-            <div class="col">
-               
-            </div>
-            <div class="col-5" id = "propsList">
-                    展示列表
-                    ------------------------------
-            </div>
-            <div class="col">
-               
-            </div>
-        </div>
+<body background="images/home_bg.png">
+    <div class="container" style="margin-top: 30px">
         <div class="row">
             <div class="col">
-                
+                <img src="images/icon_logo.png" alt="logo">
+                <img src="images/logo_PROPHETS.png" alt="logo" style="margin-left: 20px;"> 
             </div>
-            <div class="col-5">
+        </div>
+    </div>
+    <div class="container border" style="margin-top: 30px;background-color: white; border-radius: 14px;">
+    
+        <div class="row">
+                <div class="col">
+                    
+                </div>
+                <div class="col-5 text-center" style="margin-top: 37px;margin-bottom: 20px;">
+                        <img class="mr-2" src="images/home_oval.png" alt="logo">
+                        <span class="span_font">全民预言家</span>
+                        <img class="ml-2" src="images/home_oval.png" alt="logo">
+                </div>
+                <div class="col">
+                    
+                </div>
+        </div>
+
+        <div class="row">
+                <div class="btn-group">
+                        <button style="outline:none" type="button" id="hotSort" class=" ml-5 btn btn-outline-primary rounded-bottom-0 active">热度排序</button>
+                        <button style="outline:0" type="button" id="timeSort" class="  btn  rounded-bottom-0 active sortfont" >时间排序</button> 
+                </div>
+  
+        </div>
+
+        <div class="row border-top" style="max-height: 400px;overflow-y:auto;"> 
+            <div class="card m-5 w-40" id="noExtension" style="display:none;" >
+                <div class="card-body">
+                    <p class="card-text">
+                        当您安装
+                        <a target="_blank" href="https://github.com/ChengOrangeJu/WebExtensionWallet">WebExtensionWallet</a>  
+                        插件，刷新页面，<br/>将看到未来的世界
+                   </p>
+                    <p class="card-text"><small class="text-muted">预言人：神秘人</small> <small class="text-muted">2018-05-08 00:00:00</small></p>
+                </div>
+            </div>
+            <div class="card m-5 w-40 isExtension" style="display:none;">
+                    <div class="card-body">
+                        <p class="card-text">6000块钱投资什么好？买比特币，保存好钱包文件，忘掉你有过6000元这回事，五年后再来看看</p>
+                        <p class="card-text"><small class="text-muted">预言人：blockchain</small> <small class="text-muted">2011-12-20 12:49:00</small></p>
+                    </div>
+            </div>         
+            <div class="card m-5 w-40 isExtension" id = "propsList" style="display:none;">
+                <div class="card-body">
+                    <p class="card-text">未来1000年内，基本可以确定的是地球因某场大灾难而毁灭，如核战争或者温室效应</p>
+                    <p class="card-text"><small class="text-muted">预言人：霍金</small> <small class="text-muted">2017-01-11 12:10:00</small></p>
+                </div>
+            </div> 
+
+
+        </div>
+
+        <div class="row border-top">
+            <div class="col"></div>
+            <div class="col-5 m-3 text-center">
+                <button type="button" id="switch" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter" disabled>我要预言</button>
+            </div>
+            <div class="col"></div>
+        </div>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+        <div class="modal-dialog modal-dialog-centered" role="document">
+
+          <div class="modal-content">
+
+            <div class="modal-header">
+            
+              <h5 class="modal-title" id="exampleModalLongTitle">我要预言</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+
+            </div>
+
+            <div class="modal-body">
                 <form>
                     <div class="form-group">
-                        <textarea class="form-control" id="prophesy" rows="3" placeholder="写下您的未来预言"></textarea>
+                        <textarea class="form-control" id="prophesy" rows="3" placeholder="请输入您要预言的内容"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="person" placeholder="预言人（选填）">
                     </div>
                 </form>
+                <div id="alertText" class="alert alert-warning" role="alert" style="display: none"></div>
             </div>
-            <div class="col">
-                
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-primary" id="push" style="outline:none">提交</button>
+              
             </div>
+
+          </div>
+
         </div>
-        <div class="row">
-            <div class="col">
-                
-            </div>
-            <div class="col-5">
-                <button type="button" class="btn btn-outline-dark" id="push">提交</button>
-            </div>
-            <div class="col">
-                
-            </div>
-        </div>
+
+      </div>
+
     </div>
 
     <script src=lib/jquery-3.3.1.min.js></script>
