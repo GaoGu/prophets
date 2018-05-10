@@ -1,5 +1,5 @@
     //合约地址
-    var dappAddress = "n1iW8HfSKHb21dgp1rDxFRkGpWUsLGKk7Yy";
+    var dappAddress = "n1fFK9nAXDRvrejLXtaUaf418QDdzyJcXWr";
     
     //check nebpay
     document.addEventListener("DOMContentLoaded", function() {
