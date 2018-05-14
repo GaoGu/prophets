@@ -619,12 +619,12 @@
                         contract: params.contract
                     })
                     .then(function (resp) {
-                        $("#call_test_result").text(JSON.stringify(resp));
+                        //$("#call_test_result").text(JSON.stringify(resp));
 
                         if (resp.execute_err && resp.execute_err !== "") {
                             
                         } else {
-                            parent.test123(resp);
+                            parent.test123(resp.result);
                         }
                     })
                     .catch(function (err) {
