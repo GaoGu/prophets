@@ -1,5 +1,5 @@
     //合约地址
-    var dappAddress = "n1nUYZaX4AqoW1fEhAgT2hfHdUrkbqzdXXE";
+    var dappAddress = "n1fFK9nAXDRvrejLXtaUaf418QDdzyJcXWr";
 
 
 function test123(resp){
