@@ -165,8 +165,8 @@
                     <a href=# title=tab3 data-i18n=contract/call></a>
                 </li>
         </ul>
-        <div id=content>
-            <!-- search contract -->
+        <div id=content style="border-top-width: 0px;margin-top:10px;">
+                <!-- search contract -->
             <div class="search_contract  tab" id=tab1>
                 <div class=title>
                     <span data-i18n=contract/search_contract></span>
@@ -606,8 +606,8 @@
                     });
             });
         }
-        getpropsList();
-        function getpropsList(){
+        getpropsList("refresh");
+        function getpropsList(refresh){
             validateTab3() && innerCall1(function (params) {
                 neb.api
                     .call({
@@ -622,7 +622,7 @@
                     .then(function (resp) {
                         //$("#call_test_result").text(JSON.stringify(resp));
                         if (resp.result && resp.result !== "") {
-                            parent.test123(resp.result);
+                            parent.test123(resp.result,refresh);
                             $("#person").val("");
                             $("#prophesy").val("");
                         }
@@ -777,7 +777,7 @@
                         //$("#receipt_call").text(resp.txhash).prop("href", "check.html?" + resp.txhash);
                         
                         $(".modal.loading").modal("hide");
-                        getpropsList();
+                        getpropsList("no");
                        
                     })
                     .catch(function (err) {

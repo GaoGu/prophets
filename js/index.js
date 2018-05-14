@@ -2,7 +2,7 @@
     var dappAddress = "n1fFK9nAXDRvrejLXtaUaf418QDdzyJcXWr";
 
 
-function test123(resp){
+function test123(resp,refresh){
      
         if (!!resp){
             var result = JSON.parse(resp);
@@ -32,7 +32,12 @@ function test123(resp){
                 }
             }
         }
-        $("#butClose").click();
+        if(refresh=="refresh"){
+            
+        }else{
+            $("#butClose").click();
+            $(".bs-example-modal-sm").modal("show");
+        }
 }  
 
 

@@ -72,13 +72,13 @@
                 </div>
         </div>
 
-        <div class="row">
+        <!-- <div class="row">
                 <div class="btn-group">
                         <button style="outline:none" type="button" id="hotSort" class=" ml-5 btn btn-outline-primary rounded-bottom-0 active">热度排序</button>
                         <button style="outline:0" type="button" id="timeSort" class="  btn  rounded-bottom-0 active sortfont" >时间排序</button> 
                 </div>
   
-        </div>
+        </div> -->
 
         <div class="row border-top" style="max-height: 400px;overflow-y:auto;"> 
             <div class="card m-5 w-40" id="noExtension" style="display:none;" >
@@ -114,7 +114,27 @@
             </div>
             <div class="col"></div>
         </div>
-      
+        
+        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document">
+                      <div class="modal-content">
+                      <div class="modal-header">
+                  
+                          <h5 class="modal-title" id="exampleModalLongTitle">温馨提示</h5>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button>
+            
+                        </div>
+            
+                        <div class="modal-body">
+                              &nbsp;&nbsp;&nbsp;已成功提交到星云链<br/>      （如页面未展示出来，请稍等几秒刷新页面即可看到）
+                        </div>
+                 
+                    
+                  </div>
+                </div>
+              </div>
       <!-- Modal -->
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
@@ -125,7 +145,7 @@
             <div class="modal-header">
             
               <h5 class="modal-title" id="exampleModalLongTitle">我要预言</h5>
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button id="butClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
 
