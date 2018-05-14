@@ -32,8 +32,7 @@ function test123(resp){
                 }
             }
         }
-        $("#exampleModalCenter").model("hide");
-    alert("预言成功");
+        $("#butClose").click();
 }  
 
 

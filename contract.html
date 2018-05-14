@@ -606,8 +606,9 @@
                     });
             });
         }
+        getpropsList();
         function getpropsList(){
-            validateTab3() && innerCall(function (params) {
+            validateTab3() && innerCall1(function (params) {
                 neb.api
                     .call({
                         from: params.from,
@@ -620,19 +621,108 @@
                     })
                     .then(function (resp) {
                         //$("#call_test_result").text(JSON.stringify(resp));
-
+                        if (resp.result && resp.result !== "") {
+                            parent.test123(resp.result);
+                            $("#person").val("");
+                            $("#prophesy").val("");
+                        }
                         if (resp.execute_err && resp.execute_err !== "") {
                             
-                        } else {
-                            parent.test123(resp.result);
                         }
                     })
                     .catch(function (err) {
-                        $("#call_test_result").text(JSON.stringify(err));
-                        $("#call").attr("disabled", true);
-                        $("#call_result").text("");
-                        $(".next").removeClass("active1");
+                        // $("#call_test_result").text(JSON.stringify(err));
+                        // $("#call").attr("disabled", true);
+                        // $("#call_result").text("");
+                        // $(".next").removeClass("active1");
                     });
+            });
+        }
+        function innerCall1(callback) {
+            let params = {};
+
+            params.from = "n1H8FRQuRukzPdSbTorfC7Ly82cTPqkfSDk";
+
+            params.to = "n1nUYZaX4AqoW1fEhAgT2hfHdUrkbqzdXXE";
+
+            // prepare gasLimit
+            let gasLimit = Utils.toBigNumber(0);
+            try {
+                gasLimit = Utils.toBigNumber($("#run_gas_limit").val());
+            } catch (err) {
+                console.log(err);
+            }
+            if (gasLimit.cmp(Utils.toBigNumber(0)) <= 0) {
+                $("#run_gas_limit").addClass("err");
+                setTimeout(function () {
+                    $("#run_gas_limit").removeClass("err");
+                }, 5000);
+                return;
+            }
+            params.gasLimit = gasLimit.toNumber();
+
+            // prepare gasPrice
+            let gasPrice = Utils.toBigNumber(0);
+            try {
+                gasPrice = Utils.toBigNumber("100000");
+            } catch (err) {
+                console.log(err);
+            }
+            if (gasPrice.cmp(Utils.toBigNumber(0)) <= 0) {
+                $("#run_gas_price").addClass("err");
+                setTimeout(function () {
+                    $("#run_gas_price").removeClass("err");
+                }, 5000);
+                return;
+            }
+            params.gasPrice = gasPrice.toNumber();
+
+            // prepare value
+            let value = Utils.toBigNumber(0);
+            try {
+                value = nebulas.Unit.toBasic(Utils.toBigNumber($("#run_value").val()), "nas");
+            } catch (err) {
+                console.log(err);
+            }
+            if (value.cmp(Utils.toBigNumber(0)) < 0) {
+                // TODO 添加提示value输入不对
+                console.log("invalid value");
+                return;
+            }
+            params.value = value;
+
+            // prepare contract
+            params.contract = {
+                // "function": $("#call_function").val(),
+                // "args": $("#call_args").val().trim()
+                "function": "iterate",
+                "args": "[100,0]"
+            };
+
+            // prepare nonce
+            // needs refresh data on every 'test' and 'commit' call, because data update may slow,
+            // you can get different result by hit 'test' multiple times
+            neb.api.getAccountState(params.from).then(function (resp) {
+                var balance = nebulas.Unit.fromBasic(resp.balance, "nas"),
+                    $tab = $(".show.tab");
+
+                params.nonce = parseInt(resp.nonce) + 1;
+
+                if ($tab.prop("id") == "tab2")
+                    $("#balance").val(balance + " NAS");
+                else if ($tab.prop("id") == "tab3")
+                    $("#run_balance").val(balance + " NAS");
+
+                callback(params);
+            }).catch(function (err) {
+                // console.log("prepare nonce error: " + err);
+                bootbox.dialog({
+                    backdrop: true,
+                    onEscape: true,
+                    message: i18n.apiErrorToText(err.message),
+                    size: "large",
+                    title: "Error"
+                });
             });
         }
         function onClickCall() {
@@ -688,7 +778,6 @@
                         
                         $(".modal.loading").modal("hide");
                         getpropsList();
-                        parent.test123();
                        
                     })
                     .catch(function (err) {
