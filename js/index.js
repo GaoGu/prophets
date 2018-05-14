@@ -1,13 +1,49 @@
     //合约地址
-    var dappAddress = "n1fFK9nAXDRvrejLXtaUaf418QDdzyJcXWr";
-    
+    var dappAddress = "n1nUYZaX4AqoW1fEhAgT2hfHdUrkbqzdXXE";
+
+
+function test123(resp){
+     
+        if (!!resp){
+            var result = JSON.parse(resp);
+            var html = "";
+            var person;
+
+            for (var i=0;i<result.length;i++){ 
+                if(result[i].person){
+                    person = result[i].person;
+                }else{
+                    if(result[i].author){
+                        if(result[i].author.length>5){
+                            person = result[i].author.slice(0,5);
+                        }
+                    }else{
+                        person = "神秘人";
+                    }
+                }
+                html+='<div class="card ml-5 mr-5 mb-5 w-40">';
+                html+='<div class="card-body">';
+                html += '<p class="card-text">' + result[i].prophesy + '</p>';
+                html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
+                html += getMyDate(result[i].timestamp) + '</small></p>';
+                html += '</div></div>';
+                if(i==result.length-1){
+                    $("#propsList").after(html);
+                }
+            }
+        }
+        $("#exampleModalCenter").model("hide");
+    alert("预言成功");
+}  
+
+
     //check nebpay
-    document.addEventListener("DOMContentLoaded", function() {
+    // document.addEventListener("DOMContentLoaded", function() {
 
-        console.log("web page loaded...")
-        setTimeout(checkNebpay,100);
+    //     console.log("web page loaded...")
+    //     setTimeout(checkNebpay,100);
 
-    });
+    // });
 
     function checkNebpay() {
         console.log("check nebpay")
@@ -41,77 +77,77 @@
     //提交预言
     $("#push").click(function() {        
         //数据校验
-        var prophesy = $("#prophesy").val().trim();
-        if (prophesy === ""){
-            $("#alertText").text("预言内容不能为空");
-            $("#alertText").show();
-            return;
-        }
+        // var prophesy = $("#prophesy").val().trim();
+        // if (prophesy === ""){
+        //     $("#alertText").text("预言内容不能为空");
+        //     $("#alertText").show();
+        //     return;
+        // }
 
-        if (prophesy.length > 100){
-            $("#alertText").text("请输入100字以内预言");
-            $("#alertText").show();
-            return;
-        }
+        // if (prophesy.length > 100){
+        //     $("#alertText").text("请输入100字以内预言");
+        //     $("#alertText").show();
+        //     return;
+        // }
 
-        var person = $("#person").val().trim();
+        // var person = $("#person").val().trim();
 
-        if (person.length > 5){
-            $("#alertText").text("请输入5字以内昵称");
-            $("#alertText").show();
-            return;
-        }
+        // if (person.length > 5){
+        //     $("#alertText").text("请输入5字以内昵称");
+        //     $("#alertText").show();
+        //     return;
+        // }
 
-        var func = "save";
-        var args = "[\"" + prophesy + "\",\"" + person + "\"]";
-        $('#exampleModalCenter').modal('hide');
-        window.postMessage({
-            "target": "contentscript",
-            "data":{
-                "to" : dappAddress,
-                "value" : "0",
-                "contract" : {
-                    "function" : func,
-                    "args" : args
-                }
-            },
-            "method": "neb_sendTransaction"
-        }, "*");
+        // var func = "save";
+        // var args = "[\"" + prophesy + "\",\"" + person + "\"]";
+     
+        // window.postMessage({
+        //     "target": "contentscript",
+        //     "data":{
+        //         "to" : dappAddress,
+        //         "value" : "0",
+        //         "contract" : {
+        //             "function" : func,
+        //             "args" : args
+        //         }
+        //     },
+        //     "method": "neb_sendTransaction"
+        // }, "*");
     })
+ 
+    // // listen message from contentscript
+    // window.addEventListener('message', function(e) {
 
-    // listen message from contentscript
-    window.addEventListener('message', function(e) {
+    //     if (!!e.data.data.neb_call){
+    //         var result = JSON.parse(e.data.data.neb_call.result);
+    //         var html = "";
+    //         var person;
 
-        if (!!e.data.data.neb_call){
-            var result = JSON.parse(e.data.data.neb_call.result);
-            var html = "";
-            var person;
+    //         for (var i=0;i<result.length;i++){ 
+    //             if(result[i].person){
+    //                 person = result[i].person;
+    //             }else{
+    //                 if(result[i].author){
+    //                     if(result[i].author.length>5){
+    //                         person = result[i].author.slice(0,5);
+    //                     }
+    //                 }else{
+    //                     person = "神秘人";
+    //                 }
+    //             }
+    //             html+='<div class="card ml-5 mr-5 mb-5 w-40">';
+    //             html+='<div class="card-body">';
+    //             html += '<p class="card-text">' + result[i].prophesy + '</p>';
+    //             html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
+    //             html += getMyDate(result[i].timestamp) + '</small></p>';
+    //             html += '</div></div>';
+    //             if(i==result.length-1){
+    //                 $("#propsList").after(html);
+    //             }
+    //         }
+    //     }
 
-            for (var i=0;i<result.length;i++){ 
-                if(result[i].person){
-                    person = result[i].person;
-                }else{
-                    if(result[i].author){
-                        if(result[i].author.length>5){
-                            person = result[i].author.slice(0,5);
-                        }
-                    }else{
-                        person = "神秘人";
-                    }
-                }
-                html+='<div class="card ml-5 mr-5 mb-5 w-40">';
-                html+='<div class="card-body">';
-                html += '<p class="card-text">' + result[i].prophesy + '</p>';
-                html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
-                html += getMyDate(result[i].timestamp) + '</small></p>';
-                html += '</div></div>';
-                if(i==result.length-1){
-                    $("#propsList").after(html);
-                }
-            }
-        }
-
-    });
+    // });
 
     //时间戳转换
     function getMyDate(str){ 

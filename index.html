@@ -91,13 +91,13 @@
                     <p class="card-text"><small class="text-muted">预言人：神秘人</small> <small class="text-muted">2018-05-08 00:00:00</small></p>
                 </div>
             </div>
-            <div class="card m-5 w-40 isExtension" style="display:none;">
+            <div class="card m-5 w-40 isExtension">
                     <div class="card-body">
                         <p class="card-text">6000块钱投资什么好？买比特币，保存好钱包文件，忘掉你有过6000元这回事，五年后再来看看</p>
                         <p class="card-text"><small class="text-muted">预言人：blockchain</small> <small class="text-muted">2011-12-20 12:49:00</small></p>
                     </div>
             </div>         
-            <div class="card m-5 w-40 isExtension" id = "propsList" style="display:none;">
+            <div class="card m-5 w-40 isExtension" id = "propsList" >
                 <div class="card-body">
                     <p class="card-text">未来1000年内，基本可以确定的是地球因某场大灾难而毁灭，如核战争或者温室效应</p>
                     <p class="card-text"><small class="text-muted">预言人：霍金</small> <small class="text-muted">2017-01-11 12:10:00</small></p>
@@ -110,7 +110,7 @@
         <div class="row border-top">
             <div class="col"></div>
             <div class="col-5 m-3 text-center">
-                <button type="button" id="switch" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter" disabled>我要预言</button>
+                <button type="button" id="switch" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModalCenter">我要预言</button>
             </div>
             <div class="col"></div>
         </div>
@@ -132,22 +132,11 @@
             </div>
 
             <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <textarea class="form-control" id="prophesy" rows="3" placeholder="请输入您要预言的内容"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="person" placeholder="预言人（选填）">
-                    </div>
-                </form>
-                <div id="alertText" class="alert alert-warning" role="alert" style="display: none"></div>
+                    <iframe id="myFrame" name = "myFrame"
+                    src="./contract.html" frameborder="0" width="100%" height="800"></iframe>
             </div>
 
-            <div class="modal-footer">
-
-              <button type="button" class="btn btn-primary" id="push" style="outline:none">提交</button>
-              
-            </div>
+         
 
           </div>
 
