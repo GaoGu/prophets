@@ -974,6 +974,14 @@
 
             if (!globalParams.account) {
                 // TODO 提示钱包信息不正确
+                $(".modal.loading").modal("hide");
+                bootbox.dialog({
+                    backdrop: true,
+                    onEscape: true,
+                    message: "请上传您的钱包文件，谢谢",
+                    size: "large",
+                    title: "请选择您的钱包"
+                });
                 return;
             }
             params.from = globalParams.account.getAddressString();
