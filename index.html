@@ -43,7 +43,6 @@
     small{
         margin-right: 20px;
     }
-
     </style>
 </head>
 
@@ -72,15 +71,15 @@
                 </div>
         </div>
 
-        <!-- <div class="row">
-                <div class="btn-group">
-                        <button style="outline:none" type="button" id="hotSort" class=" ml-5 btn btn-outline-primary rounded-bottom-0 active">热度排序</button>
-                        <button style="outline:0" type="button" id="timeSort" class="  btn  rounded-bottom-0 active sortfont" >时间排序</button> 
-                </div>
-  
-        </div> -->
+        <div class="row">
+            <div class="btn-group">
+                    <button  type="button" id="hotSort" class=" ml-5 btn btn-outline-primary rounded-bottom-0 active">热度排序</button>
+                    <button style="margin-left: 5px;" type="button" id="timeSort" class="  btn  rounded-bottom-0 active sortfont" >时间排序</button> 
+            </div>
 
-        <div class="row border-top" style="max-height: 400px;overflow-y:auto;"> 
+        </div>
+
+        <div class="row border-top pt-5" style="max-height: 400px;overflow-y:auto;" id = "propsList"> 
             <div class="card m-5 w-40" id="noExtension" style="display:none;" >
                 <div class="card-body">
                     <p class="card-text">
@@ -91,20 +90,15 @@
                     <p class="card-text"><small class="text-muted">预言人：神秘人</small> <small class="text-muted">2018-05-08 00:00:00</small></p>
                 </div>
             </div>
-            <div class="card m-5 w-40 isExtension">
-                    <div class="card-body">
+            <div class="card ml-5 mr-5 mb-5 w-40 isExtension">
+                <div class="card-body">
                         <p class="card-text">6000块钱投资什么好？买比特币，保存好钱包文件，忘掉你有过6000元这回事，五年后再来看看</p>
                         <p class="card-text"><small class="text-muted">预言人：blockchain</small> <small class="text-muted">2011-12-20 12:49:00</small></p>
                     </div>
-            </div>         
-            <div class="card m-5 w-40 isExtension" id = "propsList" >
-                <div class="card-body">
-                    <p class="card-text">未来1000年内，基本可以确定的是地球因某场大灾难而毁灭，如核战争或者温室效应</p>
-                    <p class="card-text"><small class="text-muted">预言人：霍金</small> <small class="text-muted">2017-01-11 12:10:00</small></p>
-                </div>
             </div> 
 
 
+            
         </div>
 
         <div class="row border-top">

@@ -1,42 +1,86 @@
     //合约地址
     var dappAddress = "n1fFK9nAXDRvrejLXtaUaf418QDdzyJcXWr";
+    var order = "hot";
 
-
-function test123(resp,refresh){
-     
-        if (!!resp){
-            var result = JSON.parse(resp);
-            var html = "";
-            var person;
-
-            for (var i=result.length-1;i>=0;i--){ 
-                if(result[i].person){
-                    person = result[i].person;
-                }else{
-                    if(result[i].author){
-                        if(result[i].author.length>5){
-                            person = result[i].author.slice(0,5);
-                        }
-                    }else{
-                        person = "神秘人";
-                    }
-                }
-                html+='<div class="card ml-5 mr-5 mb-5 w-40">';
-                html+='<div class="card-body">';
-                html += '<p class="card-text">' + result[i].prophesy + '</p>';
-                html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
-                html += getMyDate(result[i].timestamp) + '</small></p>';
-                html += '</div></div>';
-                if(i==0){
-                    $("#propsList").after(html);
-                }
-            }
+    function test123(resp,refresh){
+        if(order=="hot"){
+           if (!!resp){
+               var result = JSON.parse(resp);
+               var html = "";
+               var person;
+               html+='<div class="card ml-5 mr-5 mb-5 w-40 isExtension" id = "propsList">';
+               html+='      <div class="card-body">';
+               html+='          <p class="card-text">6000块钱投资什么好？买比特币，保存好钱包文件，忘掉你有过6000元这回事，五年后再来看看</p>';
+               html+='         <p class="card-text"><small class="text-muted">预言人：blockchain</small> <small class="text-muted">2011-12-20 12:49:00</small></p>';
+               html+='      </div>';
+               html+=' </div>    '; 
+               for (var i=0;i<result.length;i++){ 
+                   console.info(i);
+                   if(result[i].person){
+                       person = result[i].person;
+                   }else{
+                       if(result[i].author){
+                           if(result[i].author.length>5){
+                               person = result[i].author.slice(0,5);
+                           }
+                       }else{
+                           person = "神秘人";
+                       }
+                   }
+                   html+='<div class="card ml-5 mr-5 mb-5 w-40">';
+                   html+='<div class="card-body">';
+                   html += '<p class="card-text">' + result[i].prophesy + '</p>';
+                   html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
+                   html += getMyDate(result[i].timestamp) + '</small></p>';
+                   html += '</div></div>';
+                   if(i==result.length-1){
+                       $("#propsList").html(html);
+                   }
+               }
+           }
+        }else{
+           if (!!resp){
+               var result = JSON.parse(resp);
+               var html = "";
+               var person;
+   
+               for (var i=result.length-1;i>=0;i--){ 
+                   console.info(i);
+                   if(result[i].person){
+                       person = result[i].person;
+                   }else{
+                       if(result[i].author){
+                           if(result[i].author.length>5){
+                               person = result[i].author.slice(0,5);
+                           }
+                       }else{
+                           person = "神秘人";
+                       }
+                   }
+                   html+='<div class="card ml-5 mr-5 mb-5 w-40">';
+                   html+='<div class="card-body">';
+                   html += '<p class="card-text">' + result[i].prophesy + '</p>';
+                   html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
+                   html += getMyDate(result[i].timestamp) + '</small></p>';
+                   html += '</div></div>';
+                   if(i==0){
+                       html+='<div class="card ml-5 mr-5 mb-5 w-40 isExtension" id = "propsList">';
+                       html+='      <div class="card-body">';
+                       html+='          <p class="card-text">6000块钱投资什么好？买比特币，保存好钱包文件，忘掉你有过6000元这回事，五年后再来看看</p>';
+                       html+='         <p class="card-text"><small class="text-muted">预言人：blockchain</small> <small class="text-muted">2011-12-20 12:49:00</small></p>';
+                       html+='      </div>';
+                       html+=' </div>    '; 
+                       $("#propsList").html(html);
+                   }
+               }
+           }
         }
-}  
+   }   
 function closemyFrame(){
     $("#butClose").click();
     $(".bs-example-modal-sm").modal("show");
 }
+
 
     //check nebpay
     // document.addEventListener("DOMContentLoaded", function() {
@@ -183,6 +227,7 @@ function closemyFrame(){
     //排序点击事件
     $("#hotSort").click(
         ()=>{
+            order = "hot";
             if( $("#hotSort").hasClass("btn-outline-primary")){
                 $("#hotSort").removeClass("btn-outline-primary");
                 $("#hotSort").addClass("sortfont");
@@ -195,10 +240,12 @@ function closemyFrame(){
                 $("#timeSort").removeClass("btn-outline-primary");
                 $("#timeSort").addClass("sortfont");
             }
+            myFrame.window.getpropsList("refresh");
         }
     )
     $("#timeSort").click(
         ()=>{
+            order = "time";
             if( $("#timeSort").hasClass("btn-outline-primary")){
                 $("#timeSort").removeClass("btn-outline-primary");
                 $("#timeSort").addClass("sortfont");
@@ -211,6 +258,7 @@ function closemyFrame(){
                 $("#hotSort").removeClass("btn-outline-primary");
                 $("#hotSort").addClass("sortfont");
             }
+            myFrame.window.getpropsList("refresh");
         }
     )
     //弹窗关闭清空内容
