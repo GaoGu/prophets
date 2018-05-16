@@ -15,7 +15,6 @@
                html+='      </div>';
                html+=' </div>    '; 
                for (var i=0;i<result.length;i++){ 
-                   console.info(i);
                    if(result[i].person){
                        person = result[i].person;
                    }else{
@@ -45,7 +44,7 @@
                var person;
    
                for (var i=result.length-1;i>=0;i--){ 
-                   console.info(i);
+                 
                    if(result[i].person){
                        person = result[i].person;
                    }else{
