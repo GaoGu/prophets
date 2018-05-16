@@ -9,7 +9,7 @@ function test123(resp,refresh){
             var html = "";
             var person;
 
-            for (var i=0;i<result.length;i++){ 
+            for (var i=result.length-1;i>0;i--){ 
                 if(result[i].person){
                     person = result[i].person;
                 }else{
@@ -27,7 +27,7 @@ function test123(resp,refresh){
                 html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
                 html += getMyDate(result[i].timestamp) + '</small></p>';
                 html += '</div></div>';
-                if(i==result.length-1){
+                if(i==1){
                     $("#propsList").after(html);
                 }
             }
