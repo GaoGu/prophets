@@ -113,7 +113,7 @@
             <div class="col"></div>
         </div>
         
-        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <!-- <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
                 <div class="modal-dialog modal-sm" role="document">
                       <div class="modal-content">
                       <div class="modal-header">
@@ -132,7 +132,7 @@
                     
                   </div>
                 </div>
-              </div>
+              </div> -->
       <!-- Modal -->
       <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
@@ -143,15 +143,28 @@
             <div class="modal-header">
             
               <h5 class="modal-title" id="exampleModalLongTitle">我要预言</h5>
-              <button id="butClose" type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
 
             </div>
 
             <div class="modal-body">
-                    <iframe id="myFrame" name = "myFrame"
-                    src="./contract.html" frameborder="0" width="100%" height="800"></iframe>
+                <form>
+                    <div class="form-group">
+                        <textarea class="form-control" id="prophesy" rows="3" placeholder="请输入您要预言的内容"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="person" placeholder="预言人（选填）">
+                    </div>
+                </form>
+                <div id="alertText" class="alert alert-warning" role="alert" style="display: none"></div>
+            </div>
+
+            <div class="modal-footer">
+
+              <button type="button" class="btn btn-primary" id="push" style="outline:none">提交</button>
+              
             </div>
 
          
@@ -165,9 +178,11 @@
     </div>
 
     <script src=lib/jquery-3.3.1.min.js></script>
+    <script src=lib/nebPay.js></script>
     <script src=lib/bootstrap-4.0.0-dist/js/bootstrap.min.js></script>
+    <script src=lib/nebulas.js></script>
     <script src=js/index.js></script>
-
+    
 </body>
 
 </html>

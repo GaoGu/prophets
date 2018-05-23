@@ -1,8 +1,42 @@
-    //合约地址
+   "use strict";
+   //合约地址
     var dappAddress = "n1fFK9nAXDRvrejLXtaUaf418QDdzyJcXWr";
     var order = "hot";
+    var NebPay = require("nebpay");//https://github.com/nebulasio/nebPay
+    var nebPay = new NebPay();
+    var serialNumber
 
-    function test123(resp,refresh){
+
+
+    //初始化获取预言
+    $(function () { 
+        if(typeof(webExtensionWallet) === "undefined"){
+            alert ("Extension wallet is not installed, please install it first.")
+        }
+        init();
+    })
+
+    function init(){
+        var value = "0";
+        var callFunction = "iterate";
+        var callArgs = "[100,0]";
+        //var nonce = "0";
+        // var gas_price = "1000000";
+        // var gas_limit = "2000000";
+        // var contract = {
+        //     "function": callFunction,
+        //     "args": callArgs
+        // }
+        nebPay.simulateCall(dappAddress, value, callFunction, callArgs, {
+            listener: cbCallDapp
+        });
+    }
+    function cbCallDapp(resp){
+            var result = resp.result    ////resp is an object, resp.result is a JSON string
+            console.log("return of rpc call: " + JSON.stringify(result))
+            cbRes(result);
+    }
+    function cbRes(resp){
         if(order=="hot"){
            if (!!resp){
                var result = JSON.parse(resp);
@@ -75,129 +109,79 @@
            }
         }
    }   
-function closemyFrame(){
-    $("#butClose").click();
-    $(".bs-example-modal-sm").modal("show");
-}
 
-
-    //check nebpay
-    // document.addEventListener("DOMContentLoaded", function() {
-
-    //     console.log("web page loaded...")
-    //     setTimeout(checkNebpay,100);
-
-    // });
-
-    function checkNebpay() {
-        console.log("check nebpay")
-        try{
-            var NebPay = require("nebpay");
-            $("#switch").attr("disabled",false);
-            $(".isExtension").show();
-            getPropsList();
-        }catch(e){
-           $("#noExtension").show();
-        }
-    }
-
-    function getPropsList(){
-        var func = "iterate";
-        var args = "[100,0]";
-        window.postMessage({
-            "target": "contentscript",
-            "data":{
-                "to" : dappAddress,
-                "value" : "0",
-                "contract" : {
-                    "function" : func,
-                    "args" : args
-                }
-            },
-            "method": "neb_call"
-        }, "*");
+    function closemyFrame(){
+        $("#butClose").click();
+        $(".bs-example-modal-sm").modal("show");
     }
 
     //提交预言
     $("#push").click(function() {        
         //数据校验
-        // var prophesy = $("#prophesy").val().trim();
-        // if (prophesy === ""){
-        //     $("#alertText").text("预言内容不能为空");
-        //     $("#alertText").show();
-        //     return;
-        // }
+        var prophesy = $("#prophesy").val().trim();
+        if (prophesy === ""){
+            $("#alertText").text("预言内容不能为空");
+            $("#alertText").show();
+            return;
+        }
 
-        // if (prophesy.length > 100){
-        //     $("#alertText").text("请输入100字以内预言");
-        //     $("#alertText").show();
-        //     return;
-        // }
+        if (prophesy.length > 100){
+            $("#alertText").text("请输入100字以内预言");
+            $("#alertText").show();
+            return;
+        }
 
-        // var person = $("#person").val().trim();
+        var person = $("#person").val().trim();
 
-        // if (person.length > 5){
-        //     $("#alertText").text("请输入5字以内昵称");
-        //     $("#alertText").show();
-        //     return;
-        // }
+        if (person.length > 5){
+            $("#alertText").text("请输入5字以内昵称");
+            $("#alertText").show();
+            return;
+        }
 
-        // var func = "save";
-        // var args = "[\"" + prophesy + "\",\"" + person + "\"]";
+        var func = "save";
+        var args = "[\"" + prophesy + "\",\"" + person + "\"]";
      
-        // window.postMessage({
-        //     "target": "contentscript",
-        //     "data":{
-        //         "to" : dappAddress,
-        //         "value" : "0",
-        //         "contract" : {
-        //             "function" : func,
-        //             "args" : args
-        //         }
-        //     },
-        //     "method": "neb_sendTransaction"
-        // }, "*");
+        var to = dappAddress;
+        var value = "0";
+        var callFunction = "save"
+        var callArgs = "[\"" + prophesy + "\",\"" + person + "\"]";
+
+        serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+            listener: cbPush        //设置listener, 处理交易返回信息
+        });
+
+        intervalQuery = setInterval(function () {
+            funcIntervalQuery();
+        }, 5000);
     })
- 
-    // // listen message from contentscript
-    // window.addEventListener('message', function(e) {
 
-    //     if (!!e.data.data.neb_call){
-    //         var result = JSON.parse(e.data.data.neb_call.result);
-    //         var html = "";
-    //         var person;
+    var intervalQuery
 
-    //         for (var i=0;i<result.length;i++){ 
-    //             if(result[i].person){
-    //                 person = result[i].person;
-    //             }else{
-    //                 if(result[i].author){
-    //                     if(result[i].author.length>5){
-    //                         person = result[i].author.slice(0,5);
-    //                     }
-    //                 }else{
-    //                     person = "神秘人";
-    //                 }
-    //             }
-    //             html+='<div class="card ml-5 mr-5 mb-5 w-40">';
-    //             html+='<div class="card-body">';
-    //             html += '<p class="card-text">' + result[i].prophesy + '</p>';
-    //             html += '<p class="card-text"><small class="text-muted">预言人：' +  person + '</small> <small class="text-muted">';
-    //             html += getMyDate(result[i].timestamp) + '</small></p>';
-    //             html += '</div></div>';
-    //             if(i==result.length-1){
-    //                 $("#propsList").after(html);
-    //             }
-    //         }
-    //     }
+    function funcIntervalQuery() {
+        nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+            .then(function (resp) {
+                console.log("tx result: " + resp)   //resp is a JSON string
+                var respObject = JSON.parse(resp)
+                if(respObject.code === 0){
+                    alert(`set ${$("#search_value").val()} succeed!`)
+                    clearInterval(intervalQuery)
+                }
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    }
 
-    // });
+    function cbPush(resp) {
+        console.log("response of push: " + JSON.stringify(resp))
+    }
 
     //时间戳转换
     function getMyDate(str){ 
         var oDate = new Date();
         oDate.setTime(str * 1000); 
-        oYear = oDate.getFullYear(),  
+        var oYear = oDate.getFullYear(),  
         oMonth = oDate.getMonth()+1,  
         oDay = oDate.getDate(),  
         oHour = oDate.getHours(),  
@@ -213,7 +197,6 @@ function closemyFrame(){
         }  
         return num;  
     }
-
 
     //输入框点击事件
     $("#prophesy").click(
@@ -239,7 +222,7 @@ function closemyFrame(){
                 $("#timeSort").removeClass("btn-outline-primary");
                 $("#timeSort").addClass("sortfont");
             }
-            myFrame.window.getpropsList("refresh");
+            init();
         }
     )
     $("#timeSort").click(
@@ -257,7 +240,7 @@ function closemyFrame(){
                 $("#hotSort").removeClass("btn-outline-primary");
                 $("#hotSort").addClass("sortfont");
             }
-            myFrame.window.getpropsList("refresh");
+            init();
         }
     )
     //弹窗关闭清空内容
