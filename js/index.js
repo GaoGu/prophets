@@ -6,8 +6,6 @@
     var nebPay = new NebPay();
     var serialNumber
 
-
-
     //初始化获取预言
     $(function () { 
         if(typeof(webExtensionWallet) === "undefined"){
