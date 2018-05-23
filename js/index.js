@@ -7,14 +7,17 @@
 
  //初始化获取预言
  $(function () { 
-     if(typeof(webExtensionWallet) === "undefined"){
-         $("#noExtension").show();
-     }else{
-         $(".isExtension").show();
-     }
-     init();
+    check();
  })
 
+ function check(){
+    if(typeof(webExtensionWallet) === "undefined"){
+        $("#noExtension").show();
+    }else{
+        $(".isExtension").show();
+        init();
+    }
+ }
  function init(){
      var value = "0";
      var callFunction = "iterate";
@@ -207,7 +210,7 @@
              $("#timeSort").removeClass("btn-outline-primary");
              $("#timeSort").addClass("sortfont");
          }
-         init();
+         check();
      }
  )
  $("#timeSort").click(
@@ -225,7 +228,7 @@
              $("#hotSort").removeClass("btn-outline-primary");
              $("#hotSort").addClass("sortfont");
          }
-         init();
+         check();
      }
  )
  //弹窗关闭清空内容
