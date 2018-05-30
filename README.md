@@ -24,8 +24,8 @@
 参数：["prophesy","person"]
 说明：保存用户预言内容到星云链，包括预言人地址、昵称、时间、内容
 
-函数： save
-参数：["prophesy","person"]
+函数： iterate
+参数：["limit","offset"]
 说明：迭代读取propsMap的数据
 
 函数： len

@@ -4,6 +4,8 @@
  var order = "hot";
  var NebPay = require("nebpay");//https://github.com/nebulasio/nebPay
  var nebPay = new NebPay();
+ var serialNumber; //交易序列号
+ var intervalQuery; //定时查询交易结果
 
  //初始化获取预言
  $(function () { 
@@ -153,11 +155,17 @@
      var value = "0";
      var callFunction = "save"
      var callArgs = "[\"" + prophesy + "\",\"" + person + "\"]";
-
-     nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
+     serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
          listener: cbPush        //设置listener, 处理交易返回信息
      });
+     
+    //设置定时查询交易结果
+    intervalQuery = setInterval(function() {
+        funcIntervalQuery();
+    }, 10000); //建议查询频率10-15s,因为星云链出块时间为15s,并且查询服务器限制每分钟最多查询10次。
+
      $("#exampleModalCenter").modal('hide');
+     
  })
 
  function cbPush(resp) {
@@ -165,6 +173,26 @@
      $('#mySmallModalLabel').modal('show');
  }
 
+ //查询交易结果. queryPayInfo返回的是一个Promise对象.
+function funcIntervalQuery() {   
+
+    //queryPayInfo的options参数用来指定查询交易的服务器地址,(如果是主网可以忽略,因为默认服务器是在主网查询)
+    nebPay.queryPayInfo(serialNumber)   //search transaction result from server (result upload to server by app)
+        .then(function (resp) {
+            console.log("tx result: " + resp)   //resp is a JSON string
+            var respObject = JSON.parse(resp)
+            //code==0交易发送成功, status==1交易已被打包上链
+            if(respObject.code === 0 && respObject.data.status === 1){                    
+                //交易成功,处理后续任务....
+                clearInterval(intervalQuery)    //清除定时查询
+                check();
+                $('#mySmallModalLabel').modal('hide');
+            }
+        })
+        .catch(function (err) {
+            console.log(err);
+        });
+}
  //时间戳转换
  function getMyDate(str){ 
      var oDate = new Date();
