@@ -119,16 +119,17 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                     <div class="modal-content">
 
-                        <div class="modal-body">
-                            预言正在提交中，成功后自动关闭
-                            请稍后...
-                        </div>
-                 
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-outline-danger" data-dismiss="modal" aria-label="Close">
-                                    强行停止，回到页面
-                            </button>
-                        </div>
+                            <div class="modal-body text-center">
+                                    预言正在提交中，成功后将自动关闭窗口,请稍后...<span id="intervalCountdown"></span>
+                                </div>
+                         
+                                <div class="modal-footer text-center">
+                                    <div class="text-center" style="width: 100%">
+                                    <button type="button" class="btn btn-outline-danger" data-dismiss="modal" aria-label="Close">
+                                            强行停止，回到页面
+                                    </button>
+                                    </div>
+                                </div>
 
                   </div>
                 </div>
@@ -162,9 +163,9 @@
             </div>
 
             <div class="modal-footer">
-
-              <button type="button" class="btn btn-primary" id="push" style="outline:none">提交</button>
-              
+                    <div class="text-center" style="width: 100%">
+                        <button type="button" class="btn btn-primary" id="push" style="outline:none">提交</button>
+                    </div>
             </div>
 
          

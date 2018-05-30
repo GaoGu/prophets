@@ -6,6 +6,8 @@
  var nebPay = new NebPay();
  var serialNumber; //交易序列号
  var intervalQuery; //定时查询交易结果
+ var intervalCountdown;
+ var intervalCountdownNum = 10;
 
  //初始化获取预言
  $(function () { 
@@ -158,7 +160,7 @@
      serialNumber = nebPay.call(to, value, callFunction, callArgs, {    //使用nebpay的call接口去调用合约,
          listener: cbPush        //设置listener, 处理交易返回信息
      });
-     
+
     //设置定时查询交易结果
     intervalQuery = setInterval(function() {
         funcIntervalQuery();
@@ -170,8 +172,23 @@
 
  function cbPush(resp) {
      console.log("response of push: " + JSON.stringify(resp));
+     intervalCountdown = setInterval(function() {
+        if(intervalCountdownNum==0){
+            intervalCountdownNum=10
+        }else{
+            intervalCountdownNum--;
+        }
+        $("#intervalCountdown").text(intervalCountdownNum);
+     }, 1000);
      $('#mySmallModalLabel').modal('show');
  }
+
+//弹窗关闭清空内容
+$('#mySmallModalLabel').on('hide.bs.modal', function (e) {
+    clearInterval(intervalQuery);    //清除定时查询
+    clearInterval(intervalCountdown);
+    check();
+})
 
  //查询交易结果. queryPayInfo返回的是一个Promise对象.
 function funcIntervalQuery() {   
@@ -184,8 +201,6 @@ function funcIntervalQuery() {
             //code==0交易发送成功, status==1交易已被打包上链
             if(respObject.code === 0 && respObject.data.status === 1){                    
                 //交易成功,处理后续任务....
-                clearInterval(intervalQuery)    //清除定时查询
-                check();
                 $('#mySmallModalLabel').modal('hide');
             }
         })
@@ -193,6 +208,7 @@ function funcIntervalQuery() {
             console.log(err);
         });
 }
+
  //时间戳转换
  function getMyDate(str){ 
      var oDate = new Date();
