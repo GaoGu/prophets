@@ -126,7 +126,7 @@
      if(typeof(webExtensionWallet) === "undefined"){
          $("#alertText").text("为了您的密匙安全，请安装官方WebExtensionWallet浏览器插件");
          $("#alertText").show();
-         return;
+         return; 
      }     
      //数据校验
      var prophesy = $("#prophesy").val().trim();
